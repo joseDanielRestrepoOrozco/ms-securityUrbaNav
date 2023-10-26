@@ -5,7 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Data
 @Document()
@@ -17,12 +18,12 @@ public class User {
     private String surname;
     private String phone;
     private String email;
-    private Date birthdate;
+    private LocalDate birthdate;
     private String password;
     @DBRef
     private Role role;
 
-    public User(String name, String surname, String phone, String email, Date birthdate, String password) {
+    public User(String name, String surname, String phone, String email, LocalDate birthdate, String password) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
@@ -71,11 +72,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
