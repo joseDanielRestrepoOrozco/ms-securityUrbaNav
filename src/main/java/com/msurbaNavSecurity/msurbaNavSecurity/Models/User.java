@@ -23,6 +23,9 @@ public class User {
     @DBRef
     private Role role;
 
+    public User(){
+    }
+
     public User(String name, String surname, String phone, String email, LocalDate birthdate, String password) {
         this.name = name;
         this.surname = surname;
