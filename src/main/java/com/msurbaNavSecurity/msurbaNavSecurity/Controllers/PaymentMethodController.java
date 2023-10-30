@@ -22,22 +22,21 @@ public class PaymentMethodController {
 
     // GET TODOS
     @GetMapping("")
-    public List<PaymentMethod> index(){
+    public List<PaymentMethod> index() {
         return this.thePaymentMethodRepository.findAll();
     }
 
     // POST
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public PaymentMethod store(@RequestBody PaymentMethod newPaymentMethod){
+    public PaymentMethod store(@RequestBody PaymentMethod newPaymentMethod) {
         return this.thePaymentMethodRepository.save(newPaymentMethod);
     }
 
-
     // GET UNO
     @GetMapping("{id}")
-    public PaymentMethod show(@PathVariable String id){
-        PaymentMethod thePaymentMethod=this.thePaymentMethodRepository
+    public PaymentMethod show(@PathVariable String id) {
+        PaymentMethod thePaymentMethod = this.thePaymentMethodRepository
                 .findById(id)
                 .orElse(null);
         return thePaymentMethod;
@@ -45,17 +44,17 @@ public class PaymentMethodController {
 
     // PUT
     @PutMapping("{id}")
-    public PaymentMethod update(@PathVariable String id,@RequestBody PaymentMethod theNewPaymentMethod){
-        PaymentMethod theActualPaymentMethod=this.thePaymentMethodRepository
+    public PaymentMethod update(@PathVariable String id, @RequestBody PaymentMethod theNewPaymentMethod) {
+        PaymentMethod theActualPaymentMethod = this.thePaymentMethodRepository
                 .findById(id)
                 .orElse(null);
-        if (theActualPaymentMethod!=null){
+        if (theActualPaymentMethod != null) {
             theActualPaymentMethod.setType(theNewPaymentMethod.getType());
             theActualPaymentMethod.setCardNumber(theNewPaymentMethod.getCardNumber());
             theActualPaymentMethod.setCardCVV(theNewPaymentMethod.getCardCVV());
             theActualPaymentMethod.setExpiryDate(theNewPaymentMethod.getExpiryDate());
             return this.thePaymentMethodRepository.save(theActualPaymentMethod);
-        }else{
+        } else {
             return null;
         }
     }
@@ -63,11 +62,11 @@ public class PaymentMethodController {
     // DELETE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
-    public void destroy(@PathVariable String id){
-        PaymentMethod thePaymentMethod=this.thePaymentMethodRepository
+    public void destroy(@PathVariable String id) {
+        PaymentMethod thePaymentMethod = this.thePaymentMethodRepository
                 .findById(id)
                 .orElse(null);
-        if (thePaymentMethod!=null){
+        if (thePaymentMethod != null) {
             this.thePaymentMethodRepository.delete(thePaymentMethod);
         }
     }
@@ -75,11 +74,11 @@ public class PaymentMethodController {
     // MATCH
     @PutMapping("{paymentmethod_id}/user/{user_id}")
     public PaymentMethod matchPaymentMethodUser(@PathVariable String paymentmethod_id,
-                              @PathVariable String user_id) {
-        PaymentMethod theActualPaymentMethod=this.thePaymentMethodRepository.findById(paymentmethod_id).orElse(null);
-        User theActualUser=this.theUserRepository.findById(user_id).orElse(null);
+            @PathVariable String user_id) {
+        PaymentMethod theActualPaymentMethod = this.thePaymentMethodRepository.findById(paymentmethod_id).orElse(null);
+        User theActualUser = this.theUserRepository.findById(user_id).orElse(null);
 
-        if(theActualPaymentMethod != null && theActualUser != null){
+        if (theActualPaymentMethod != null && theActualUser != null) {
             theActualPaymentMethod.setUser(theActualUser);
             return this.thePaymentMethodRepository.save(theActualPaymentMethod);
         } else {
@@ -90,8 +89,8 @@ public class PaymentMethodController {
     // UNMATCH
     @PutMapping("{paymentmethod_id}/user")
     public PaymentMethod unMatchPaymentMethodUser(@PathVariable String paymentmethod_id) {
-        PaymentMethod theActualPaymentMethod=this.thePaymentMethodRepository.findById(paymentmethod_id).orElse(null);
-        if(theActualPaymentMethod != null){
+        PaymentMethod theActualPaymentMethod = this.thePaymentMethodRepository.findById(paymentmethod_id).orElse(null);
+        if (theActualPaymentMethod != null) {
             theActualPaymentMethod.setUser(null);
             return this.thePaymentMethodRepository.save(theActualPaymentMethod);
         } else {

@@ -31,10 +31,10 @@ public class RolePermissionsController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("role/{role_id}/permission/{permission_id}")
     public RolePermission store(@PathVariable String role_id,
-                                @PathVariable String permission_id) {
-        Role theRole=theRoleRepository.findById(role_id).orElse(null);
-        Permission thePermission=thePermissionRepository.findById(permission_id).orElse(null);
-        if(theRole!=null && thePermission!=null){
+            @PathVariable String permission_id) {
+        Role theRole = theRoleRepository.findById(role_id).orElse(null);
+        Permission thePermission = thePermissionRepository.findById(permission_id).orElse(null);
+        if (theRole != null && thePermission != null) {
             RolePermission newRolePermission = new RolePermission();
             newRolePermission.setRole(theRole);
             newRolePermission.setPermission(thePermission);
@@ -46,7 +46,7 @@ public class RolePermissionsController {
 
     // Método GET (TODOS)
     @GetMapping("")
-    public List<RolePermission> index(){
+    public List<RolePermission> index() {
         return this.theRolePermissionRepository.findAll();
     }
 
@@ -62,6 +62,4 @@ public class RolePermissionsController {
         }
     }
 
-
 }
-

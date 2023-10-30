@@ -21,31 +21,31 @@ public class UsersController {
     private EncryptionService encryptionService;
 
     @GetMapping("")
-    public List<User> index(){
+    public List<User> index() {
         return this.theUserRepository.findAll();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public User store(@RequestBody User newUser){
+    public User store(@RequestBody User newUser) {
         newUser.setPassword(encryptionService.convertirSHA256(newUser.getPassword()));
         return this.theUserRepository.save(newUser);
     }
 
     @GetMapping("{id}")
-    public User show(@PathVariable String id){
-        User theUser=this.theUserRepository
+    public User show(@PathVariable String id) {
+        User theUser = this.theUserRepository
                 .findById(id)
                 .orElse(null);
         return theUser;
     }
 
     @PutMapping("{id}")
-    public User update(@PathVariable String id,@RequestBody User theNewUser){
-        User theActualUser=this.theUserRepository
+    public User update(@PathVariable String id, @RequestBody User theNewUser) {
+        User theActualUser = this.theUserRepository
                 .findById(id)
                 .orElse(null);
-        if (theActualUser!=null){
+        if (theActualUser != null) {
             theActualUser.setName(theNewUser.getName());
             theActualUser.setSurname(theNewUser.getSurname());
             theActualUser.setPhone(theNewUser.getPhone());
@@ -53,32 +53,32 @@ public class UsersController {
             theActualUser.setBirthdate(theNewUser.getBirthdate());
             theActualUser.setPassword(theNewUser.getPassword());
             return this.theUserRepository.save(theActualUser);
-        }else{
+        } else {
             return null;
         }
     }
 
     // @PutMapping("encrypting")
     // public void encrypting() {
-    //     List<User> usuarios = theUserRepository.findAll();
-        
-    //     for (User usuario : usuarios) {
-    //         System.out.println("ID: " + usuario.get_id());
-    //         System.out.println("Nombre de usuario: " + usuario.getName());
-    //         System.out.println("Contraseña: " + usuario.getPassword());
-    //         usuario.setPassword(encryptionService.convertirSHA256(usuario.getPassword()));
-    //         System.out.println("Nueva Contraseña Encriptada: " + usuario.getPassword());
-    //         this.theUserRepository.save(usuario);
-    //     }
+    // List<User> usuarios = theUserRepository.findAll();
+
+    // for (User usuario : usuarios) {
+    // System.out.println("ID: " + usuario.get_id());
+    // System.out.println("Nombre de usuario: " + usuario.getName());
+    // System.out.println("Contraseña: " + usuario.getPassword());
+    // usuario.setPassword(encryptionService.convertirSHA256(usuario.getPassword()));
+    // System.out.println("Nueva Contraseña Encriptada: " + usuario.getPassword());
+    // this.theUserRepository.save(usuario);
+    // }
     // }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
-    public void destroy(@PathVariable String id){
-        User theUser=this.theUserRepository
+    public void destroy(@PathVariable String id) {
+        User theUser = this.theUserRepository
                 .findById(id)
                 .orElse(null);
-        if (theUser!=null){
+        if (theUser != null) {
             this.theUserRepository.delete(theUser);
         }
     }

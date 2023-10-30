@@ -8,6 +8,5 @@ public interface RolePermissionRepository extends MongoRepository<RolePermission
 
     // método para encontrar RolePermission con rol y permiso (consultando a la BD)
     @Query("{'role.$id': ObjectId(?0),'permission.$id': ObjectId(?1)}")
-    RolePermission getRolePermission(String roleId,String permissionId);
+    RolePermission getRolePermission(String roleId, String permissionId);
 }
-
