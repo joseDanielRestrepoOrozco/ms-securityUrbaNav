@@ -14,8 +14,7 @@ import java.io.IOException;
 
 @CrossOrigin
 @RestController
-// @RequestMapping("api/public/security")
-@RequestMapping("security")
+@RequestMapping("api/public/security")
 
 public class SecurityController {
     @Autowired

@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/paymentmethod")
+@RequestMapping("/private/paymentmethod")
 public class PaymentMethodController {
     @Autowired
     private PaymentMethodRepository thePaymentMethodRepository;
@@ -20,20 +20,31 @@ public class PaymentMethodController {
     @Autowired
     private UserRepository theUserRepository;
 
-    // GET TODOS
+    /**
+     * Listado de metodos de pago
+     * @return listado de metodos de pago
+     */
     @GetMapping("")
     public List<PaymentMethod> index() {
         return this.thePaymentMethodRepository.findAll();
     }
 
-    // POST
+    /**
+     * Guardar un metodo de pago
+     * @param newPaymentMethod Objeto de PaymentMethod
+     * @return lo que devuelve el metodo save
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public PaymentMethod store(@RequestBody PaymentMethod newPaymentMethod) {
         return this.thePaymentMethodRepository.save(newPaymentMethod);
     }
 
-    // GET UNO
+    /**
+     * Mostrar un metodo de pago 
+     * @param id identificador del metodo de pago
+     * @return un objeto de tipo PaymentMethod
+     */
     @GetMapping("{id}")
     public PaymentMethod show(@PathVariable String id) {
         PaymentMethod thePaymentMethod = this.thePaymentMethodRepository
@@ -42,7 +53,12 @@ public class PaymentMethodController {
         return thePaymentMethod;
     }
 
-    // PUT
+    /**
+     * Actualizar un metodo de pago
+     * @param id identificador de un metodo de pago
+     * @param theNewPaymentMethod el objeto actualizado
+     * @return null || el metodo de pago
+     */
     @PutMapping("{id}")
     public PaymentMethod update(@PathVariable String id, @RequestBody PaymentMethod theNewPaymentMethod) {
         PaymentMethod theActualPaymentMethod = this.thePaymentMethodRepository
@@ -59,7 +75,10 @@ public class PaymentMethodController {
         }
     }
 
-    // DELETE
+    /**
+     * Eliminar un metodo de pago
+     * @param id identificar del metodo de pago
+     */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {
@@ -71,7 +90,12 @@ public class PaymentMethodController {
         }
     }
 
-    // MATCH
+    /**
+     * Une el metodo de pago con el usuario
+     * @param paymentmethod_id identificador del metodo de pago
+     * @param user_id identificador del usuario
+     * @return null || metodo de pago con usuario
+     */
     @PutMapping("{paymentmethod_id}/user/{user_id}")
     public PaymentMethod matchPaymentMethodUser(@PathVariable String paymentmethod_id,
             @PathVariable String user_id) {
@@ -86,7 +110,11 @@ public class PaymentMethodController {
         }
     }
 
-    // UNMATCH
+    /**
+     * Separa un metodo de pago de un usuario
+     * @param paymentmethod_id
+     * @return null || metodo de pago sin usuario
+     */
     @PutMapping("{paymentmethod_id}/user")
     public PaymentMethod unMatchPaymentMethodUser(@PathVariable String paymentmethod_id) {
         PaymentMethod theActualPaymentMethod = this.thePaymentMethodRepository.findById(paymentmethod_id).orElse(null);

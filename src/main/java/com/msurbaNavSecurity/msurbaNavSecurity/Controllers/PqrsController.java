@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/pqrs")
+@RequestMapping("/private/pqrs")
 public class PqrsController {
     @Autowired
     private PqrsRepository thePqrsRepository;
