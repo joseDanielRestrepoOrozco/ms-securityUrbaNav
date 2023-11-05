@@ -30,7 +30,7 @@ public class PaymentMethodController {
     }
 
     /**
-     * Guardar un metodo de pago
+     * Crear un metodo de pago
      * @param newPaymentMethod Objeto de PaymentMethod
      * @return lo que devuelve el metodo save
      */
@@ -41,7 +41,7 @@ public class PaymentMethodController {
     }
 
     /**
-     * Mostrar un metodo de pago 
+     * Mostrar un solo metodo de pago
      * @param id identificador del metodo de pago
      * @return un objeto de tipo PaymentMethod
      */
@@ -77,7 +77,7 @@ public class PaymentMethodController {
 
     /**
      * Eliminar un metodo de pago
-     * @param id identificar del metodo de pago
+     * @param id identificador del metodo de pago
      */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")

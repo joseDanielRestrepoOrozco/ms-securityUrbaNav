@@ -15,17 +15,31 @@ public class RolesController {
     @Autowired
     private RoleRepository theRoleRepository;
 
+    /**
+     * Listado de roles
+     * @return listado de objetos de tipo Role
+     */
     @GetMapping("")
     public List<Role> index() {
         return this.theRoleRepository.findAll();
     }
 
+    /**
+     * Crear un rol
+     * @param newRole Objeto de Role
+     * @return el rol guardado
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Role store(@RequestBody Role newRole) {
         return this.theRoleRepository.save(newRole);
     }
 
+    /**
+     * Mostrar un solo rol
+     * @param id identificador del rol
+     * @return un objeto de tipo Role
+     */
     @GetMapping("{id}")
     public Role show(@PathVariable String id) {
         Role theRole = this.theRoleRepository
@@ -34,6 +48,12 @@ public class RolesController {
         return theRole;
     }
 
+    /**
+     * Actualizar un rol
+     * @param id identificador de un rol
+     * @param theNewRole el objeto actualizado
+     * @return null || el rol
+     */
     @PutMapping("{id}")
     public Role update(@PathVariable String id, @RequestBody Role theNewRole) {
         Role theActualRole = this.theRoleRepository
@@ -48,6 +68,10 @@ public class RolesController {
         }
     }
 
+    /**
+     * Eliminar un rol
+     * @param id identificador del rol
+     */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {

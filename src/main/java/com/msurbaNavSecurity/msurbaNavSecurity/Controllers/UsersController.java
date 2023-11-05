@@ -20,11 +20,22 @@ public class UsersController {
     @Autowired
     private EncryptionService encryptionService;
 
+
+    /**
+     * Listado de usuarios
+     * @return listado de objetos de tipo User
+     */
     @GetMapping("")
     public List<User> index() {
         return this.theUserRepository.findAll();
     }
 
+
+    /**
+     * Crear un usuario
+     * @param newUser Objeto de User
+     * @return el usuario guardado
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public User store(@RequestBody User newUser) {
@@ -32,6 +43,11 @@ public class UsersController {
         return this.theUserRepository.save(newUser);
     }
 
+    /**
+     * Mostrar un solo usuario
+     * @param id identificador del usuario
+     * @return un objeto de tipo User
+     */
     @GetMapping("{id}")
     public User show(@PathVariable String id) {
         User theUser = this.theUserRepository
@@ -40,6 +56,12 @@ public class UsersController {
         return theUser;
     }
 
+    /**
+     * Actualizar un usuario
+     * @param id identificador de un usuario
+     * @param theNewUser el objeto actualizado
+     * @return null || el usuario
+     */
     @PutMapping("{id}")
     public User update(@PathVariable String id, @RequestBody User theNewUser) {
         User theActualUser = this.theUserRepository
@@ -72,6 +94,10 @@ public class UsersController {
     // }
     // }
 
+    /**
+     * Eliminar un usuario
+     * @param id identificador del usuario
+     */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {
