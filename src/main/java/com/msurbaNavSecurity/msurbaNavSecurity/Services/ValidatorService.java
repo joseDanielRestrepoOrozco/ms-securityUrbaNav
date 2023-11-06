@@ -30,6 +30,12 @@ public class ValidatorService {
 
     private static final String BEARER_PREFIX = "Bearer ";
 
+    /** Valida si un usuario tiene permiso para acceder a una URL y método específicos en función de su rol y permisos asignados
+     * @param request La solicitud HTTP
+     * @param url La URL que se desea validar
+     * @param method El método HTTP que se desea validar
+     * @return Devuelve el valor de success, que indica si la validación de roles y permisos fue exitosa o no lo fue.
+     */
     public boolean validationRolePermission(HttpServletRequest request, String url, String method) {
         boolean success = false;
         User theUser = this.getUser(request);
@@ -53,6 +59,11 @@ public class ValidatorService {
         return success;
     }
 
+    /** Extrae información del usuario a partir de un token JWT (JSON Web Token) que se encuentra en la cabecera de autorización de una solicitud HTTP
+     * @param request La solicitud HTTP
+     * @return Devuelve el objeto theUser, que contiene la información del usuario obtenida a partir del token JWT.
+     * Si no se encontró un token válido en la cabecera de autorización o si hubo algún problema en la extracción del usuario a partir del token, el método devolverá null.
+     */
     public User getUser(final HttpServletRequest request) {
         User theUser = null;
         String authorizationHeader = request.getHeader("Authorization");

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 @Service
 public class JwtService {
     @Value("${jwt.secret}")
@@ -21,6 +22,11 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private Long expiration;
     private Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+    /** Se utiliza para crear y firmar un token JWT (JSON Web Token) basado en la información proporcionada del objeto User. 
+     * @param theUser objeto de tipo User
+     * @return se genera el token JWT como una cadena de caracteres y se retorna
+     */
     public String generateToken(User theUser) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
@@ -41,6 +47,13 @@ public class JwtService {
                 .signWith(secretKey)
                 .compact();
     }
+
+    /** Valida un token JWT (JSON Web Token)
+     * @param token token JWT como entrada
+     * @return Si la fecha de vencimiento del token ha expirado devuelve false,
+     * o si la fecha de vencimiento del token es posterior a la fecha actual,
+     * se considera el token es válido y se devuelve true.
+     */
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
@@ -59,6 +72,10 @@ public class JwtService {
         }
     }
 
+    /** Extrae información de un token JWT (JSON Web Token) y devuelve un objeto de tipo User con los datos contenidos en el token
+     * @param token cadena de texto token JWT
+     * @return un objeto User lleno con los datos del token JWT o si el token no es válido o la firma es incorrecta devuelve null
+     */
     public User getUserFromToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
