@@ -1,6 +1,8 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
+import com.msurbaNavSecurity.msurbaNavSecurity.Models.Role;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
+import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.RoleRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.UserRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Services.EncryptionService;
 
@@ -19,6 +21,9 @@ public class UsersController {
 
     @Autowired
     private EncryptionService encryptionService;
+
+    @Autowired
+    private RoleRepository theRoleRepository;
 
 
     /**
@@ -109,4 +114,37 @@ public class UsersController {
         }
     }
 
+    /**
+     * asocia el role con el usuario
+     * @param user_id identificador del usuario
+     * @param role_id identificador del role
+     * @return guarda los cambios del usuario en la base de datos
+     */
+    @PutMapping("{user_id}/role/{role_id}")
+    public User matchUserRole(@PathVariable String user_id, @PathVariable String role_id){
+        User theActualUser = this.theUserRepository.findById(user_id).orElse(null);
+        Role theActualRole = this.theRoleRepository.findById(role_id).orElse(null);
+        if (theActualUser != null && theActualRole != null){
+            theActualUser.setRole(theActualRole);
+            return this.theUserRepository.save(theActualUser);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * desasocia el role con el usuario
+     * @param user_id identificador del usuario
+     * @return guarda los cambios en la base de datos
+     */
+    @DeleteMapping("{user_id}/role")
+    public User unMatchUserRole(@PathVariable String user_id){
+        User theActualUser = this.theUserRepository.findById(user_id).orElse(null);
+        if (theActualUser != null){
+            theActualUser.setRole(null);
+            return this.theUserRepository.save(theActualUser);
+        } else {
+            return null;
+        }
+    }
 }
