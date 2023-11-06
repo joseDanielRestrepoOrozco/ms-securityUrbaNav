@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -75,6 +76,18 @@ public class PaymentMethodController {
         }
     }
 
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("list")
+    public List<PaymentMethod> storeList(@RequestBody List<PaymentMethod> ListPayment) {
+        List<PaymentMethod> savedPayments = new ArrayList<>();
+        for (PaymentMethod payment : ListPayment) {
+            PaymentMethod savedPayment = this.thePaymentMethodRepository.save(payment);
+            savedPayments.add(savedPayment);
+        };
+        return  savedPayments;
+    }
+
     /**
      * Eliminar un metodo de pago
      * @param id identificar del metodo de pago
@@ -88,6 +101,25 @@ public class PaymentMethodController {
         if (thePaymentMethod != null) {
             this.thePaymentMethodRepository.delete(thePaymentMethod);
         }
+    }
+
+
+
+
+    @GetMapping("user/{id}")
+    public List<PaymentMethod> showPaymentUser(@PathVariable String id) {
+        List<PaymentMethod> listPayment = this.thePaymentMethodRepository.findAll();
+        List<PaymentMethod> listPaymentxUse = new ArrayList<>();
+        for (PaymentMethod paymentMethod : listPayment) {
+
+            if (paymentMethod.getUser() != null) {
+                if (paymentMethod.getUser().get_id().equals(id)) {
+                    paymentMethod.setUser(null);
+                    listPaymentxUse.add(paymentMethod);
+                }
+            }
+        }
+        return listPaymentxUse;
     }
 
     /**

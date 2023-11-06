@@ -1,5 +1,6 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
+import com.msurbaNavSecurity.msurbaNavSecurity.Models.PaymentMethod;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Pqrs;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.PqrsRepository;
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+///REVISAR NO FUNCIONA MATCH
 @CrossOrigin
 @RestController
 @RequestMapping("/private/pqrs")
@@ -42,6 +45,33 @@ public class PqrsController {
         return thePqrs;
     }
 
+    @GetMapping("user/{id}")
+    public List<Pqrs> showPqrsUser(@PathVariable String id) {
+        List<Pqrs> listPqrs = this.thePqrsRepository.findAll();
+        List<Pqrs> listPqrsxUse = new ArrayList<>();
+        for (Pqrs pqrs : listPqrs) {
+            System.out.println(pqrs.getUser());
+            if (pqrs.getUser() != null) {
+                if (pqrs.getUser().get_id().equals(id)) {
+                    listPqrsxUse.add(pqrs);
+                }
+            }
+        }
+        return listPqrsxUse;
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("list")
+    public List<Pqrs> storeList(@RequestBody List<Pqrs> ListPqrs) {
+        List<Pqrs> savedPqrs = new ArrayList<>();
+        for (Pqrs pqrs : ListPqrs) {
+            Pqrs savedPqr = this.thePqrsRepository.save(pqrs);
+            savedPqrs.add(savedPqr);
+        }
+        ;
+        return savedPqrs;
+    }
+
     // PUT
     @PutMapping("{id}")
     public Pqrs update(@PathVariable String id, @RequestBody Pqrs theNewPqrs) {
@@ -70,6 +100,15 @@ public class PqrsController {
         }
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("all")
+    public void destroyAll() {
+        List<Pqrs> thePqrs = this.index();
+        for (Pqrs pqr : thePqrs) {
+            this.thePqrsRepository.delete(pqr);
+        }
+    }
+
     // MATCH
     @PutMapping("{pqrs_id}/user/{user_id}")
     public Pqrs matchPqrsUser(@PathVariable String pqrs_id,
@@ -83,6 +122,17 @@ public class PqrsController {
         } else {
             return null;
         }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{user_id}/pqrs")
+    public List<Pqrs> matchList(@RequestBody List<Pqrs> ListPqrs, @PathVariable String user_id) {
+        List<Pqrs> savedpqrs = new ArrayList<>();
+        for (Pqrs pqrs : ListPqrs) {
+            System.out.println(pqrs.get_id());
+            savedpqrs.add(this.matchPqrsUser(pqrs.get_id(), user_id));
+        }
+        return savedpqrs;
     }
 
     // UNMATCH

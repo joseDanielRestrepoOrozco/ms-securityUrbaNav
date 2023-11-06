@@ -53,7 +53,7 @@ public class ValidatorService {
         return success;
     }
 
-    public User getUser(final HttpServletRequest request) {
+    public User getUser(final HttpServletRequest request) { //// la clave
         User theUser = null;
         String authorizationHeader = request.getHeader("Authorization");
         System.out.println("Header " + authorizationHeader);
