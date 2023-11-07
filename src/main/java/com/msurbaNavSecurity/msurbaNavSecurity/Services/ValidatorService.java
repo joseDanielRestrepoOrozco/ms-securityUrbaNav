@@ -59,10 +59,12 @@ public class ValidatorService {
         return success;
     }
 
-    /** Extrae información del usuario a partir de un token JWT (JSON Web Token) que se encuentra en la cabecera de autorización de una solicitud HTTP
+    /** Extrae información del usuario a partir de un token JWT (JSON Web Token) 
+     * que se encuentra en la cabecera de autorización de una solicitud HTTP
      * @param request La solicitud HTTP
      * @return Devuelve el objeto theUser, que contiene la información del usuario obtenida a partir del token JWT.
-     * Si no se encontró un token válido en la cabecera de autorización o si hubo algún problema en la extracción del usuario a partir del token, el método devolverá null.
+     * Si no se encontró un token válido en la cabecera de autorización o si hubo 
+     * algún problema en la extracción del usuario a partir del token, el método devolverá null.
      */
     public User getUser(final HttpServletRequest request) {
         User theUser = null;
