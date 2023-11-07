@@ -19,7 +19,7 @@ public class Pqrs {
     @DBRef
     private User user;
 
-    public Pqrs(String type, String description, LocalDate date, User user) {
+    public Pqrs(String type, String description, LocalDate date) {
         this.type = type;
         this.description = description;
         this.date = date;
