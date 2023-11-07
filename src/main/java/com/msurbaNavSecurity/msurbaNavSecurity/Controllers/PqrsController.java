@@ -23,20 +23,31 @@ public class PqrsController {
     @Autowired
     private UserRepository theUserRepository;
 
-    // GET TODOS
+    /**
+     * Listado de pqrs
+     * @return listado de objetos de tipo Pqrs
+     */
     @GetMapping("")
     public List<Pqrs> index() {
         return this.thePqrsRepository.findAll();
     }
 
-    // POST
+    /**
+     * Crear un pqrs
+     * @param newPqrs Objeto de Pqrs
+     * @return el pqrs guardado
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Pqrs store(@RequestBody Pqrs newPqrs) {
         return this.thePqrsRepository.save(newPqrs);
     }
 
-    // GET UNO
+    /**
+     * Mostrar un solo pqrs
+     * @param id identificador del pqrs
+     * @return un objeto de tipo Pqrs
+     */
     @GetMapping("{id}")
     public Pqrs show(@PathVariable String id) {
         Pqrs thePqrs = this.thePqrsRepository
@@ -72,7 +83,12 @@ public class PqrsController {
         return savedPqrs;
     }
 
-    // PUT
+    /**
+     * Actualizar un pqrs
+     * @param id identificador de un pqrs
+     * @param theNewPqrs el objeto actualizado
+     * @return null || el pqrs
+     */
     @PutMapping("{id}")
     public Pqrs update(@PathVariable String id, @RequestBody Pqrs theNewPqrs) {
         Pqrs theActualPqrs = this.thePqrsRepository
@@ -88,7 +104,10 @@ public class PqrsController {
         }
     }
 
-    // DELETE
+    /**
+     * Eliminar un pqrs
+     * @param id identificador del pqrs
+     */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {
@@ -109,7 +128,12 @@ public class PqrsController {
         }
     }
 
-    // MATCH
+    /**
+     * Une el pqrs con el usuario
+     * @param pqrs_id identificador del pqrs
+     * @param user_id identificador del usuario
+     * @return null || pqrs con usuario
+     */
     @PutMapping("{pqrs_id}/user/{user_id}")
     public Pqrs matchPqrsUser(@PathVariable String pqrs_id,
             @PathVariable String user_id) {
@@ -135,7 +159,11 @@ public class PqrsController {
         return savedpqrs;
     }
 
-    // UNMATCH
+    /**
+     * Separa un pqrs de un usuario
+     * @param pqrs_id
+     * @return null || pqrs sin usuario
+     */
     @PutMapping("{pqrs_id}/user")
     public Pqrs unMatchPqrsUser(@PathVariable String pqrs_id) {
         Pqrs theActualPqrs = this.thePqrsRepository.findById(pqrs_id).orElse(null);
