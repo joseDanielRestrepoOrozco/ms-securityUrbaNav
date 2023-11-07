@@ -1,7 +1,7 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
-import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Role;
+import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.RoleRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.UserRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Services.EncryptionService;
@@ -27,6 +27,11 @@ public class UsersController {
     @Autowired
     private RoleRepository theRoleRepository;
 
+
+    /**
+     * Listado de usuarios
+     * @return listado de objetos de tipo User
+     */
     @GetMapping("")
     public List<User> index() {
         return this.theUserRepository.findAll();
@@ -65,6 +70,11 @@ public class UsersController {
         return savedUsers;
     }
 
+    /**
+     * Mostrar un solo usuario
+     * @param id identificador del usuario
+     * @return un objeto de tipo User
+     */
     @GetMapping("{id}")
     public User show(@PathVariable String id) {
         User theUser = this.theUserRepository
@@ -73,6 +83,12 @@ public class UsersController {
         return theUser;
     }
 
+    /**
+     * Actualizar un usuario
+     * @param id identificador de un usuario
+     * @param theNewUser el objeto actualizado
+     * @return null || el usuario
+     */
     @PutMapping("{id}")
     public User update(@PathVariable String id, @RequestBody User theNewUser) {
         User theActualUser = this.theUserRepository
@@ -105,6 +121,10 @@ public class UsersController {
     // }
     // }
 
+    /**
+     * Eliminar un usuario
+     * @param id identificador del usuario
+     */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {

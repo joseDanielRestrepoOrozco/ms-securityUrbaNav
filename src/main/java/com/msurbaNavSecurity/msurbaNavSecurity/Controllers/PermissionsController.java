@@ -17,7 +17,7 @@ public class PermissionsController {
     private PermissionRepository thePermissionRepository;
 
     /**
-     * Lista los permisos
+     * Listado de permisos
      * @return listado de objetos de tipo Permission
      */
     @GetMapping("")
@@ -27,8 +27,8 @@ public class PermissionsController {
 
 
     /**
-     * Guarda un permiso
-     * @param newPermission
+     * Crear un permiso
+     * @param newPermission Objeto de Permission
      * @return el permiso guardado
      */
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,7 +41,7 @@ public class PermissionsController {
     /**
      * Muestra un solo permiso
      * @param id identificador del permiso
-     * @return un objeto Permission
+     * @return un objeto de tipo Permission
      */
     @GetMapping("{id}")
     public Permission show(@PathVariable String id) {
@@ -52,9 +52,10 @@ public class PermissionsController {
     }
 
     /**
-     * @param id
-     * @param theNewPermission
-     * @return
+     * Actualizar un permiso
+     * @param id identificador de un permiso
+     * @param theNewPermission el objeto actualizado
+     * @return null || el permiso
      */
     @PutMapping("{id}")
     public Permission update(@PathVariable String id, @RequestBody Permission theNewPermission) {
@@ -71,6 +72,10 @@ public class PermissionsController {
         }
     }
 
+    /**
+     * Eliminar un permiso
+     * @param id identificador del permiso
+     */
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void destroy(@PathVariable String id) {
