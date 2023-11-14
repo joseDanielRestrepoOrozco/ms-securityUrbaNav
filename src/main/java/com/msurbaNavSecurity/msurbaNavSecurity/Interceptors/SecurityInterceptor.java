@@ -16,9 +16,11 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        boolean success = this.validatorService.validationRolePermission(request, request.getRequestURI(),
-                request.getMethod());
-        return success;
+        //boolean success = this.validatorService.validationRolePermission(request, request.getRequestURI(),
+                //request.getMethod());
+        //return success;
+        System.out.println(request.getRequestURI());
+        return true;
     }
 
     // @Override

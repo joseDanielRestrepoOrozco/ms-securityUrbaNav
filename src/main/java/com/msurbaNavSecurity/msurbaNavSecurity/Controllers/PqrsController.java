@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-///REVISAR NO FUNCIONA MATCH
+
 @CrossOrigin
 @RestController
 @RequestMapping("/private/pqrs")

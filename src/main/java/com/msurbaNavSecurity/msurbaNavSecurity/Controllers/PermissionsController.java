@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -35,6 +36,19 @@ public class PermissionsController {
     @PostMapping
     public Permission store(@RequestBody Permission newPermission) {
         return this.thePermissionRepository.save(newPermission);
+    }
+
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("list")
+    public List<Permission> storeList(@RequestBody List<Permission> ListPermission) {
+        List<Permission> savedPermissions = new ArrayList<>();
+        for (Permission permission : ListPermission) {
+            Permission savedPermission = this.thePermissionRepository.save(permission);
+            savedPermissions.add(savedPermission);
+        }
+        ;
+        return savedPermissions;
     }
 
 
@@ -69,6 +83,16 @@ public class PermissionsController {
             return this.thePermissionRepository.save(theActualPermission);
         } else {
             return null;
+        }
+    }
+
+
+     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("all")
+    public void destroyAll() {
+        List<Permission> thePermissions = this.index();
+        for (Permission permission : thePermissions) {
+            this.thePermissionRepository.delete(permission);
         }
     }
 
