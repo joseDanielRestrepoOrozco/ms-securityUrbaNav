@@ -16,27 +16,11 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //boolean success = this.validatorService.validationRolePermission(request, request.getRequestURI(),
-                //request.getMethod());
-        //return success;
-        System.out.println(request.getRequestURI());
-        return true;
+        boolean success = this.validatorService.validationRolePermission(request, request.getRequestURI(),
+        request.getMethod());
+        System.out.println(success);
+        return success;
+
     }
-
-    // @Override
-    // public void postHandle(HttpServletRequest request, HttpServletResponse
-    // response, Object handler,
-    // ModelAndView modelAndView) throws Exception {
-    // // Lógica a ejecutar después de que se haya manejado la solicitud por el
-    // // controlador
-    // }
-
-    // @Override
-    // public void afterCompletion(HttpServletRequest request, HttpServletResponse
-    // response, Object handler,
-    // Exception ex) throws Exception {
-    // // Lógica a ejecutar después de completar la solicitud, incluso después de la
-    // // renderización de la vista
-    // }
 
 }

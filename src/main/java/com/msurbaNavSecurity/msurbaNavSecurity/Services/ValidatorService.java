@@ -41,6 +41,7 @@ public class ValidatorService {
         User theUser = this.getUser(request);
         if (theUser != null) {
             Role theRole = theUser.getRole();
+            System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaa");
             System.out.println("Antes URL " + url + " metodo " + method);
             url = url.replaceAll("[0-9a-fA-F]{24}", "?");
             System.out.println("URL " + url + " metodo " + method);
@@ -49,6 +50,8 @@ public class ValidatorService {
                 System.out.println("Rol " + theRole.getName() + " Permission " + thePermission.getUrl());
                 RolePermission theRolePermission = this.theRolePermissionRepository.getRolePermission(theRole.get_id(),
                         thePermission.get_id());
+                System.out.println(theRolePermission.getPermission().getMethod() + theRolePermission.getRole().getName());
+                System.out.println(theRolePermission != null);
                 if (theRolePermission != null) {
                     success = true;
                 }
@@ -56,6 +59,7 @@ public class ValidatorService {
                 success = false;
             }
         }
+        System.out.println(success);
         return success;
     }
 
@@ -74,6 +78,7 @@ public class ValidatorService {
             String token = authorizationHeader.substring(BEARER_PREFIX.length());
             System.out.println("Bearer Token: " + token);
             User theUserFromToken = jwtService.getUserFromToken(token);
+            
             if (theUserFromToken != null) {
                 theUser = this.theUserRepository.findById(theUserFromToken.get_id())
                         .orElse(null);

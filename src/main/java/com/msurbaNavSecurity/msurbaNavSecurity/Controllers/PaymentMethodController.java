@@ -27,7 +27,9 @@ public class PaymentMethodController {
      */
     @GetMapping("")
     public List<PaymentMethod> index() {
+        System.out.println("Aqui estoy");
         return this.thePaymentMethodRepository.findAll();
+
     }
 
     /**
