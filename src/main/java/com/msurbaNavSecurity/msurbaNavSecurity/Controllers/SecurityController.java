@@ -1,11 +1,15 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
+import com.msurbaNavSecurity.msurbaNavSecurity.Models.Permission;
 // import com.mssecurity.mssecurity.Models.Permission;
 // import com.mssecurity.mssecurity.Services.ValidatorsService;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.UserRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Services.EncryptionService;
 import com.msurbaNavSecurity.msurbaNavSecurity.Services.JwtService;
+import com.msurbaNavSecurity.msurbaNavSecurity.Services.ValidatorService;
+
+import jakarta.servlet.http.HttpServletRequest;
 // import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import java.io.IOException;
 @RequestMapping("api/public/security")
 
 public class SecurityController {
+
     @Autowired
     private UserRepository theUserRepository;
 
@@ -26,10 +31,10 @@ public class SecurityController {
     @Autowired
     private EncryptionService encryptionService;
 
-    // @Autowired
-    // private ValidatorsService validatorService;
+    @Autowired
+    private ValidatorService validatorService;
 
-    // private static final String BEARER_PREFIX = "Bearer ";
+    private static final String BEARER_PREFIX = "Bearer ";
 
     @PostMapping("login")
     public String login(@RequestBody User theUser, final HttpServletResponse response) throws IOException {
@@ -37,12 +42,14 @@ public class SecurityController {
         User actualUser = this.theUserRepository.getUserByEmail(theUser.getEmail());
         if (actualUser != null
                 && actualUser.getPassword().equals(encryptionService.convertirSHA256(theUser.getPassword()))) {
+              
             token = jwtService.generateToken(actualUser);
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
         return token;
     }
+
 
     /*
      * 
@@ -56,16 +63,14 @@ public class SecurityController {
      * }
      * 
      * // ofrece servicio para verificar el rolePermission
-     * 
-     * @PostMapping("permissions-validation")
-     * public boolean permissionsValidation(final HttpServletRequest
-     * request,@RequestBody Permission thePermission) {
-     * boolean
-     * success=this.validatorService.validationRolePermission(request,thePermission.
-     * getUrl(),thePermission.getMethod());
-     * return success;
-     * }
-     * 
-     */
+    */
+    @PostMapping("permissions-validation")
+     public boolean permissionsValidation(final HttpServletRequest request,@RequestBody Permission thePermission) {
+        System.out.println(thePermission);
+     boolean success=this.validatorService.validationRolePermission(request,thePermission.getUrl(),thePermission.getMethod());
+     return success;
+     }
+     
+
 
 }

@@ -36,7 +36,7 @@ public class JwtService {
         claims.put("surname", theUser.getSurname());
         claims.put("phone", theUser.getPhone());
         claims.put("email", theUser.getEmail());
-        claims.put("birthdate", theUser.getBirthdate());
+        claims.put("birthdate", (theUser.getBirthdate()).toString());
         claims.put("role", theUser.getRole());
 
         return Jwts.builder()
@@ -91,7 +91,9 @@ public class JwtService {
             user.setSurname((String) claims.get("surname"));
             user.setPhone((String) claims.get("phone"));
             user.setEmail((String) claims.get("email"));
-            user.setBirthdate((LocalDate) claims.get("birthdate"));
+            System.out.println("Pase por aqui");
+            System.out.println(user.getEmail());
+           // user.setBirthdate((LocalDate) claims.get("birthdate"));
             return user;
         } catch (Exception e) {
             return null;
