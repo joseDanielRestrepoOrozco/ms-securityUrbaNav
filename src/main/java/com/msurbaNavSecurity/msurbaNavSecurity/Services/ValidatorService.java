@@ -38,9 +38,10 @@ public class ValidatorService {
      */
     public boolean validationRolePermission(HttpServletRequest request, String url, String method) {
         boolean success = false;
-        User theUser = this.getUser(request);
-        if (theUser != null) {
+                User theUser = this.getUser(request);
+                if (theUser != null) {
             Role theRole = theUser.getRole();
+            System.out.println("Antes URL " + url + " metodo " + method);
             url = url.replaceAll("[0-9a-fA-F]{24}", "?");
             Permission thePermission = this.thePermissionRepository.getPermission(url, method);
             if (theRole != null && thePermission != null) {
@@ -67,6 +68,7 @@ public class ValidatorService {
     public User getUser(final HttpServletRequest request) {
         User theUser = null;
         String authorizationHeader = request.getHeader("Authorization");
+        
         System.out.println("Header " + authorizationHeader);
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
             String token = authorizationHeader.substring(BEARER_PREFIX.length());

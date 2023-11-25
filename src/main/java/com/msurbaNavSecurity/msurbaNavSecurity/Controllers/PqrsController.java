@@ -1,6 +1,6 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
-import com.msurbaNavSecurity.msurbaNavSecurity.Models.PaymentMethod;
+
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Pqrs;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.PqrsRepository;
