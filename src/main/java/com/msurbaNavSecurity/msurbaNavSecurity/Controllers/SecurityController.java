@@ -16,7 +16,6 @@ import java.io.IOException;
 @CrossOrigin
 @RestController
 @RequestMapping("api/public/security")
-
 public class SecurityController {
 
     @Autowired
@@ -39,6 +38,7 @@ public class SecurityController {
         User actualUser = this.theUserRepository.getUserByEmail(theUser.getEmail());
         if (actualUser != null
                 && actualUser.getPassword().equals(encryptionService.convertirSHA256(theUser.getPassword()))) {
+
             token = jwtService.generateToken(actualUser);
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);

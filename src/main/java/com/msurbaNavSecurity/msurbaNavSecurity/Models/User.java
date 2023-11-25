@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-
 @Data
 @Document()
 public class User {
@@ -23,7 +22,7 @@ public class User {
     @DBRef
     private Role role;
 
-    public User(){
+    public User() {
     }
 
     public User(String name, String surname, String phone, String email, LocalDate birthdate, String password) {
