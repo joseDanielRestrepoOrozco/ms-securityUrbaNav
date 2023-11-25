@@ -2,7 +2,6 @@ package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Permission;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Role;
-import com.msurbaNavSecurity.msurbaNavSecurity.Models.acotador;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.RolePermission;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.PermissionRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.RolePermissionRepository;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -67,7 +65,7 @@ public class RolePermissionsController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("role/{role_id}/permissions")
     public void storeList(@RequestBody List<Permission> ListPermission, @PathVariable String role_id) {
-        //List<RolePermission> savedRolePermissions = new ArrayList<>();
+        // List<RolePermission> savedRolePermissions = new ArrayList<>();
         for (Permission permission : ListPermission) {
             System.out.println(permission.get_id());
             this.store(role_id, permission.get_id());
@@ -76,49 +74,17 @@ public class RolePermissionsController {
         // return savedRolePermissions;
     }
 
-
-    public Permission getPermission(String url,  String method) {
+    public Permission getPermission(String url, String method) {
         List<Permission> permissions = thePermissionRepository.findAll();
         for (Permission permission : permissions) {
-            if(permission.getMethod().equals(method) && permission.getUrl().equals(url)){
+            if (permission.getMethod().equals(method) && permission.getUrl().equals(url)) {
                 return permission;
             }
         }
         return null;
     }
 
-
-    public void storeAcotada(acotador ListAcotada, String role_id) {      
-        List<Permission> list = new ArrayList<>();
-        for (String metodo : ListAcotada.getMethods()) {
-            String url = ListAcotada.getUrl();
-            String agregar = "/?";
-            if (!(metodo.equals("GET") || metodo.equals("POST"))) {
-                url = url + agregar;
-            }
-            metodo = (metodo.equals("GET_1")) ? "GET" : metodo;
-            Permission ThePermission = getPermission(url, metodo);
-            if(ThePermission != null){
-               list.add(ThePermission);
-            }
-        }
-        System.out.println(list);
-        
-        this.storeList(list, role_id);
-    }
-
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("role/permissions/acotada/{role_id}")
-    public void storeListAcotada(@RequestBody List<acotador> ListAcotada,  @PathVariable String role_id) {   
-        for (acotador acotador : ListAcotada) {
-            this.storeAcotada(acotador, role_id);
-        }    
-    }
-
-
-
-     // Método DELETE
+    // Método DELETE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("all")
     public void destroyAll() {
@@ -126,7 +92,7 @@ public class RolePermissionsController {
         for (RolePermission rolePermission : list) {
             this.theRolePermissionRepository.delete(rolePermission);
         }
-        
+
     }
 
 }

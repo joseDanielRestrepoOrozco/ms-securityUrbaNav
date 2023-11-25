@@ -19,6 +19,7 @@ public class PermissionsController {
 
     /**
      * Listado de permisos
+     * 
      * @return listado de objetos de tipo Permission
      */
     @GetMapping("")
@@ -26,9 +27,9 @@ public class PermissionsController {
         return this.thePermissionRepository.findAll();
     }
 
-
     /**
      * Crear un permiso
+     * 
      * @param newPermission Objeto de Permission
      * @return el permiso guardado
      */
@@ -37,7 +38,6 @@ public class PermissionsController {
     public Permission store(@RequestBody Permission newPermission) {
         return this.thePermissionRepository.save(newPermission);
     }
-
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("list")
@@ -51,9 +51,9 @@ public class PermissionsController {
         return savedPermissions;
     }
 
-
     /**
      * Muestra un solo permiso
+     * 
      * @param id identificador del permiso
      * @return un objeto de tipo Permission
      */
@@ -67,7 +67,8 @@ public class PermissionsController {
 
     /**
      * Actualizar un permiso
-     * @param id identificador de un permiso
+     * 
+     * @param id               identificador de un permiso
      * @param theNewPermission el objeto actualizado
      * @return null || el permiso
      */
@@ -86,8 +87,7 @@ public class PermissionsController {
         }
     }
 
-
-     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("all")
     public void destroyAll() {
         List<Permission> thePermissions = this.index();
@@ -98,6 +98,7 @@ public class PermissionsController {
 
     /**
      * Eliminar un permiso
+     * 
      * @param id identificador del permiso
      */
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -110,7 +111,4 @@ public class PermissionsController {
             this.thePermissionRepository.delete(thePermission);
         }
     }
-
-
-    
 }

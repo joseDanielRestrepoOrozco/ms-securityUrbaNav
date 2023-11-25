@@ -1,6 +1,5 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
-import com.msurbaNavSecurity.msurbaNavSecurity.Models.PaymentMethod;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Pqrs;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.PqrsRepository;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @CrossOrigin
 @RestController
@@ -25,6 +23,7 @@ public class PqrsController {
 
     /**
      * Listado de pqrs
+     * 
      * @return listado de objetos de tipo Pqrs
      */
     @GetMapping("")
@@ -34,6 +33,7 @@ public class PqrsController {
 
     /**
      * Crear un pqrs
+     * 
      * @param newPqrs Objeto de Pqrs
      * @return el pqrs guardado
      */
@@ -45,6 +45,7 @@ public class PqrsController {
 
     /**
      * Mostrar un solo pqrs
+     * 
      * @param id identificador del pqrs
      * @return un objeto de tipo Pqrs
      */
@@ -85,7 +86,8 @@ public class PqrsController {
 
     /**
      * Actualizar un pqrs
-     * @param id identificador de un pqrs
+     * 
+     * @param id         identificador de un pqrs
      * @param theNewPqrs el objeto actualizado
      * @return null || el pqrs
      */
@@ -106,6 +108,7 @@ public class PqrsController {
 
     /**
      * Eliminar un pqrs
+     * 
      * @param id identificador del pqrs
      */
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -130,6 +133,7 @@ public class PqrsController {
 
     /**
      * Une el pqrs con el usuario
+     * 
      * @param pqrs_id identificador del pqrs
      * @param user_id identificador del usuario
      * @return null || pqrs con usuario
@@ -161,6 +165,7 @@ public class PqrsController {
 
     /**
      * Separa un pqrs de un usuario
+     * 
      * @param pqrs_id
      * @return null || pqrs sin usuario
      */

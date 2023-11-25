@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/private/users")
@@ -27,9 +26,9 @@ public class UsersController {
     @Autowired
     private RoleRepository theRoleRepository;
 
-
     /**
      * Listado de usuarios
+     * 
      * @return listado de objetos de tipo User
      */
     @GetMapping("")
@@ -37,10 +36,10 @@ public class UsersController {
         return this.theUserRepository.findAll();
     }
 
-    public boolean validarCorreo(User newUser){
+    public boolean validarCorreo(User newUser) {
         List<User> theUsers = this.theUserRepository.findAll();
         for (User user : theUsers) {
-            if(user.getEmail().equals(newUser.getEmail()) || user.getPhone().equals(newUser.getPhone())){
+            if (user.getEmail().equals(newUser.getEmail()) || user.getPhone().equals(newUser.getPhone())) {
                 return true;
             }
         }
@@ -51,12 +50,11 @@ public class UsersController {
     @PostMapping
     public User store(@RequestBody User newUser) {
         newUser.setPassword(encryptionService.convertirSHA256(newUser.getPassword()));
-        if(!(this.validarCorreo(newUser))){
+        if (!(this.validarCorreo(newUser))) {
             return this.theUserRepository.save(newUser);
         }
         return null;
     }
-
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("list")
@@ -72,6 +70,7 @@ public class UsersController {
 
     /**
      * Mostrar un solo usuario
+     * 
      * @param id identificador del usuario
      * @return un objeto de tipo User
      */
@@ -85,7 +84,8 @@ public class UsersController {
 
     /**
      * Actualizar un usuario
-     * @param id identificador de un usuario
+     * 
+     * @param id         identificador de un usuario
      * @param theNewUser el objeto actualizado
      * @return null || el usuario
      */
@@ -123,6 +123,7 @@ public class UsersController {
 
     /**
      * Eliminar un usuario
+     * 
      * @param id identificador del usuario
      */
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -136,7 +137,6 @@ public class UsersController {
         }
     }
 
-
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("all")
     public void destroyAll() {
@@ -146,10 +146,9 @@ public class UsersController {
         }
     }
 
-
     @PutMapping("{user_id}/role/{role_id}")
     public User matchUserRole(@PathVariable String user_id,
-                              @PathVariable String role_id) {
+            @PathVariable String role_id) {
         User theActualUser = this.theUserRepository.findById(user_id)
                 .orElse(null);
         Role theActualRole = this.theRoleRepository.findById(role_id)
@@ -161,7 +160,6 @@ public class UsersController {
             return null;
         }
     }
-
 
     @PutMapping("{user_id}/role")
     public User unMatchUserRole(@PathVariable String user_id) {

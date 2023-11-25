@@ -17,6 +17,7 @@ public class RolesController {
 
     /**
      * Listado de roles
+     * 
      * @return listado de objetos de tipo Role
      */
     @GetMapping("")
@@ -26,6 +27,7 @@ public class RolesController {
 
     /**
      * Crear un rol
+     * 
      * @param newRole Objeto de Role
      * @return el rol guardado
      */
@@ -37,6 +39,7 @@ public class RolesController {
 
     /**
      * Mostrar un solo rol
+     * 
      * @param id identificador del rol
      * @return un objeto de tipo Role
      */
@@ -50,7 +53,8 @@ public class RolesController {
 
     /**
      * Actualizar un rol
-     * @param id identificador de un rol
+     * 
+     * @param id         identificador de un rol
      * @param theNewRole el objeto actualizado
      * @return null || el rol
      */
@@ -70,6 +74,7 @@ public class RolesController {
 
     /**
      * Eliminar un rol
+     * 
      * @param id identificador del rol
      */
     @ResponseStatus(HttpStatus.NO_CONTENT)
