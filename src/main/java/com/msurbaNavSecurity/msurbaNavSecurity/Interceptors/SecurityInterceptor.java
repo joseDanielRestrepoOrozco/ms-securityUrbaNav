@@ -16,6 +16,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("Llegue aqui");
         boolean success = this.validatorService.validationRolePermission(request, request.getRequestURI(),
         request.getMethod());
         System.out.println(success);
