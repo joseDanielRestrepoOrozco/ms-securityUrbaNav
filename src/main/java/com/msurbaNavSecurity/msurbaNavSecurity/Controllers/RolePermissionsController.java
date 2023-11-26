@@ -31,7 +31,9 @@ public class RolePermissionsController {
     public RolePermission store(@PathVariable String role_id,
             @PathVariable String permission_id) {
         Role theRole = theRoleRepository.findById(role_id).orElse(null);
+        System.out.println(theRole);
         Permission thePermission = thePermissionRepository.findById(permission_id).orElse(null);
+        System.out.println(thePermission);
         if (theRole != null && thePermission != null) {
             RolePermission newRolePermission = new RolePermission();
             newRolePermission.setRole(theRole);
@@ -40,6 +42,15 @@ public class RolePermissionsController {
         } else {
             return null;
         }
+    }
+
+    // Método GET (UNO)
+    @GetMapping("{id}")
+    public RolePermission show(@PathVariable String id) {
+        RolePermission theRolePermission = this.theRolePermissionRepository
+                .findById(id)
+                .orElse(null);
+        return theRolePermission;
     }
 
     // Método GET (TODOS)

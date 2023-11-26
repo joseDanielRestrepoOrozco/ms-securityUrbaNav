@@ -11,6 +11,11 @@ public class RolePermission {
     @DBRef
     private Permission permission;
 
+    public RolePermission(Role role, Permission permission) {
+        this.role = role;
+        this.permission = permission;
+    }
+
     public RolePermission() {
     }
 
