@@ -46,19 +46,17 @@ public class SecurityController {
         return token;
     }
 
-    /*
-     * 
-     * //Método logout
-     * //Método reset pass
-     * 
-     * @GetMapping("token-validation")
-     * public User tokenValidation(final HttpServletRequest request) {
-     * User theUser=this.validatorService.getUser(request);
-     * return theUser;
-     * }
-     * 
-     * // ofrece servicio para verificar el rolePermission
-     */
+      
+    //Método logout
+    //Método reset pass
+    
+    @GetMapping("token-validation")
+    public User tokenValidation(final HttpServletRequest request) {
+        User theUser=this.validatorService.getUser(request);
+        return theUser;
+    }
+      
+    // ofrece servicio para verificar el rolePermission
     @PostMapping("permissions-validation")
     public boolean permissionsValidation(final HttpServletRequest request, @RequestBody Permission thePermission) {
         System.out.println(thePermission);
