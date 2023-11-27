@@ -29,11 +29,9 @@ public class RolePermissionsController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("role/{role_id}/permission/{permission_id}")
     public RolePermission store(@PathVariable String role_id,
-            @PathVariable String permission_id) {
+                                @PathVariable String permission_id) {
         Role theRole = theRoleRepository.findById(role_id).orElse(null);
-        System.out.println(theRole);
         Permission thePermission = thePermissionRepository.findById(permission_id).orElse(null);
-        System.out.println(thePermission);
         if (theRole != null && thePermission != null) {
             RolePermission newRolePermission = new RolePermission();
             newRolePermission.setRole(theRole);
@@ -82,6 +80,7 @@ public class RolePermissionsController {
         }
         // return savedRolePermissions;
     }
+
 
     public Permission getPermission(String url, String method) {
         List<Permission> permissions = thePermissionRepository.findAll();
