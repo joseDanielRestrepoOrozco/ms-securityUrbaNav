@@ -6,6 +6,7 @@ import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.SessionRepository;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -106,5 +107,23 @@ public class SessionsController {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Elimina la sesión de un usuario específico.
+     *
+     * @param userId identificador del usuario
+     * @return ResponseEntity
+     */
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<?> deleteSession(@PathVariable String userId) {
+        List<Session> sessions = this.theSessionRepository.findByUser_Id(userId);
+        if (sessions.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        sessions.forEach(session -> this.theSessionRepository.delete(session));
+
+        return ResponseEntity.ok().build();
     }
 }
