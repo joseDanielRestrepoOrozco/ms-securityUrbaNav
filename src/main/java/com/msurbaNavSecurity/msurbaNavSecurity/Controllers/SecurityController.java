@@ -109,9 +109,54 @@ public class SecurityController {
         }
     }
 
+    @PostMapping("changePassword")
+    public String changePassword(@RequestBody User theUser, final HttpServletResponse response) throws IOException {
+        String validation = "";
+        User actualUser = this.theUserRepository.getUserByEmail(theUser.getEmail());
+        if (actualUser != null) {
+            validation= actualUser.get_id();
 
-    //Método reset pass
-    
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        return validation;
+    }
+
+    @PostMapping("verifyCode2")
+    public ResponseEntity<Boolean> verifyCode2(@RequestBody Map<String, Object> requestBody) {
+        String email = (String) requestBody.get("email");
+        String code = (String) requestBody.get("code");
+
+        User actualUser = theUserRepository.getUserByEmail(email);
+        if (actualUser == null) {
+            return ResponseEntity.status(HttpServletResponse.SC_NOT_FOUND).body(false);
+        }
+
+        Optional<Session> userSessionOpt = sessionRepository.findByUserAndActive(actualUser, false);
+        if (userSessionOpt.isPresent() && Integer.toString(userSessionOpt.get().getCode()).equals(code)){
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
+    }
+
+    @PutMapping("{id}/password")
+    public ResponseEntity<Boolean> password(@PathVariable String id, @RequestBody Map<String, String> requestBody) {
+        String newPassword = requestBody.get("password");
+
+        User actualUser = theUserRepository.findById(id).orElse(null);
+        if (actualUser != null) {
+            actualUser.setPassword(encryptionService.convertirSHA256(newPassword));
+            theUserRepository.save(actualUser);
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(HttpServletResponse.SC_NOT_FOUND).body(false);
+        }
+    }
+
+
+
+
     @GetMapping("token-validation")
     public User tokenValidation(final HttpServletRequest request) {
         User theUser=this.validatorService.getUser(request);
