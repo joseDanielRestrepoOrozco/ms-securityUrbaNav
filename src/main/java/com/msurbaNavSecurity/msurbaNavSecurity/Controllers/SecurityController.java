@@ -154,8 +154,30 @@ public class SecurityController {
         }
     }
 
+    @PostMapping("password2")
+    public ResponseEntity<Boolean> password2(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String currentPassword = requestBody.get("currentPassword");
+        String newPassword = requestBody.get("newPassword");
+        String confirmPassword = requestBody.get("confirmPassword");
 
-
+        User actualUser = this.theUserRepository.getUserByEmail(email);
+        if (actualUser != null && actualUser.getPassword().equals(encryptionService.convertirSHA256(currentPassword))) {
+            if (!newPassword.equals(currentPassword)) {
+                if (newPassword.equals(confirmPassword)) {
+                    actualUser.setPassword(encryptionService.convertirSHA256(newPassword));
+                    theUserRepository.save(actualUser);
+                    return ResponseEntity.ok(true);
+                } else {
+                    return ResponseEntity.ok(false);
+                }
+            } else {
+                return ResponseEntity.ok(false);
+            }
+        } else {
+            return ResponseEntity.ok(false);
+        }
+    }
 
     @GetMapping("token-validation")
     public User tokenValidation(final HttpServletRequest request) {
