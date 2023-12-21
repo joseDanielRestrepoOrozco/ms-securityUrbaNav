@@ -172,6 +172,17 @@ public class SecurityController {
         return success;
     }
 
-
-
+    @GetMapping("isUser/user/{user_id}/password/{password}")
+    public boolean verifyPassword(@PathVariable String user_id,
+                              @PathVariable String password) {
+        User theUser = this.theUserRepository.findById(user_id)
+                .orElse(null);
+        if (theUser != null) {
+            password = encryptionService.convertirSHA256(password);
+            if (theUser.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -49,6 +49,7 @@ public class UsersController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public User store(@RequestBody User newUser) {
+        System.out.println(newUser);
         newUser.setPassword(encryptionService.convertirSHA256(newUser.getPassword()));
         if (!(this.validarCorreo(newUser))) {
             return this.theUserRepository.save(newUser);
@@ -100,7 +101,7 @@ public class UsersController {
             theActualUser.setPhone(theNewUser.getPhone());
             theActualUser.setEmail(theNewUser.getEmail());
             theActualUser.setBirthdate(theNewUser.getBirthdate());
-            theActualUser.setPassword(theNewUser.getPassword());
+            theActualUser.setPassword(encryptionService.convertirSHA256(theNewUser.getPassword()));
             return this.theUserRepository.save(theActualUser);
         } else {
             return null;
