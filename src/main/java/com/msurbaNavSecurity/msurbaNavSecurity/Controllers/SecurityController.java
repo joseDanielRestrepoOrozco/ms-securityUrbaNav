@@ -1,5 +1,6 @@
 package com.msurbaNavSecurity.msurbaNavSecurity.Controllers;
 
+import com.msurbaNavSecurity.msurbaNavSecurity.Models.PasswordChangeResponse;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.Permission;
 import com.msurbaNavSecurity.msurbaNavSecurity.Models.User;
 import com.msurbaNavSecurity.msurbaNavSecurity.Repositories.UserRepository;
@@ -155,7 +156,7 @@ public class SecurityController {
     }
 
     @PostMapping("password2")
-    public ResponseEntity<Boolean> password2(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<PasswordChangeResponse> password2(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
         String currentPassword = requestBody.get("currentPassword");
         String newPassword = requestBody.get("newPassword");
@@ -167,17 +168,35 @@ public class SecurityController {
                 if (newPassword.equals(confirmPassword)) {
                     actualUser.setPassword(encryptionService.convertirSHA256(newPassword));
                     theUserRepository.save(actualUser);
-                    return ResponseEntity.ok(true);
+
+                    PasswordChangeResponse response = new PasswordChangeResponse(
+                    true,
+                    "Contraseña cambiada exitosamente");
+
+                    return ResponseEntity.ok(response);
                 } else {
-                    return ResponseEntity.ok(false);
+                    PasswordChangeResponse response = new PasswordChangeResponse(
+                    false,
+                    "Las contraseñas nuevas no coinciden");
+
+                    return ResponseEntity.ok(response);
                 }
             } else {
-                return ResponseEntity.ok(false);
+                PasswordChangeResponse response = new PasswordChangeResponse(
+                false,
+                "La nueva contraseña no debe ser igual a la actual");
+
+                return ResponseEntity.ok(response);
             }
         } else {
-            return ResponseEntity.ok(false);
+            PasswordChangeResponse response = new PasswordChangeResponse(
+            false,
+            "La contraseña actual no es correcta");
+
+            return ResponseEntity.ok(response);
         }
     }
+
 
     @GetMapping("token-validation")
     public User tokenValidation(final HttpServletRequest request) {
